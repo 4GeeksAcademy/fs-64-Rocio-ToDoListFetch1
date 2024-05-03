@@ -1,25 +1,35 @@
 import React from "react";
+import { useEffect, useState } from 'react';
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
 
 //create your first component
 const Home = () => {
-	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+	const [userInput, setUserInput] = useState("");
+	const [tareas, setTareas] = useState([]);
+	useEffect(() => {
+	console.log(tareas)	
+	},[tareas])
+	const handleClick = () => {
+		setTareas (previo=> [...previo, userInput])
+		
+		 setUserInput("");
+
+	};
+	
+
+	return  (
+		<div className=" w-2/5 bg-slate-200 rounded-xl p-5 fixed top-100 left-100 ">
+			<div className="text-center">
+			<h1>Lista de tareas</h1>
+			<input type="text" name="tarea" id="texto" value={userInput} onChange={(e)=> {setUserInput(e.target.value)}}/>
+			<button onClick={() => {handleClick()}}>Añadir</button>
+			
+			{tareas.map((tarea,index) => <li key={index}>{tarea}<button onClick={() =>{setTareas(tareas.filter((task, i)=> {index !== i}))}}>Borrar tarea </button></li>)}
 		</div>
+		</div>
+		
 	);
 };
 
